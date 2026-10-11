@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+    --background: 0.975 0.006 270;
+    --foreground: 0.2 0.03 275;
+    --card: 1 0 0;
+    --card-foreground: 0.2 0.03 275;
+    --popover: 1 0 0;
+    --popover-foreground: 0.2 0.03 275;
+    --primary: 0.52 0.22 277;
+    --primary-foreground: 0.99 0 0;
+    --primary-soft: 0.95 0.035 277;
+    --secondary: 0.955 0.01 275;
+    --secondary-foreground: 0.25 0.03 275;
+    --muted: 0.955 0.008 275;
+    --muted-foreground: 0.52 0.025 275;
+    --accent: 0.95 0.025 277;
+    --accent-foreground: 0.35 0.15 277;
+    --destructive: 0.6 0.22 25;
+    --destructive-foreground: 0.99 0 0;
+    --success: 0.64 0.16 155;
+    --warning: 0.75 0.16 70;
+    --info: 0.62 0.15 235;
+    --border: 0.92 0.01 275;
+    --input: 0.92 0.01 275;
+    --ring: 0.52 0.22 277;
+    --chart-1: 0.52 0.22 277;
+    --chart-2: 0.64 0.16 155;
+    --chart-3: 0.6 0.22 25;
+    --chart-4: 0.75 0.16 70;
+    --chart-5: 0.62 0.15 235;
+    --sidebar: 1 0 0;
+    --sidebar-foreground: 0.3 0.03 275;
+    --sidebar-primary: 0.52 0.22 277;
+    --sidebar-primary-foreground: 0.99 0 0;
+    --sidebar-accent: 0.955 0.03 277;
+    --sidebar-accent-foreground: 0.42 0.2 277;
+    --sidebar-border: 0.92 0.01 275;
+    --sidebar-ring: 0.52 0.22 277;
+    --gradient-brand: linear-gradient(135deg, oklch(0.52 0.22 277), oklch(0.58 0.2 300));
+    --shadow-card: 0 1px 2px oklch(0.2 0.03 275 / 4%), 0 4px 16px -6px oklch(0.2 0.03 275 / 8%);
+    --shadow-glow: 0 8px 24px -8px oklch(0.52 0.22 277 / 50%);
+    --font-heading: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+    --font-body: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .dark {
+    --background: 0.16 0.02 275;
+    --foreground: 0.95 0.008 275;
+    --card: 0.2 0.022 275;
+    --card-foreground: 0.95 0.008 275;
+    --popover: 0.21 0.022 275;
+    --popover-foreground: 0.95 0.008 275;
+    --primary: 0.65 0.19 277;
+    --primary-foreground: 0.15 0.02 275;
+    --primary-soft: 0.28 0.07 277;
+    --secondary: 0.25 0.022 275;
+    --secondary-foreground: 0.92 0.01 275;
+    --muted: 0.25 0.02 275;
+    --muted-foreground: 0.68 0.02 275;
+    --accent: 0.27 0.05 277;
+    --accent-foreground: 0.85 0.1 277;
+    --destructive: 0.66 0.2 25;
+    --destructive-foreground: 0.99 0 0;
+    --success: 0.7 0.15 155;
+    --warning: 0.8 0.15 75;
+    --info: 0.7 0.13 235;
+    --border: 0.28 0.015 275;
+    --input: 0.3 0.015 275;
+    --ring: 0.65 0.19 277;
+    --chart-1: 0.65 0.19 277;
+    --chart-2: 0.7 0.15 155;
+    --chart-3: 0.66 0.2 25;
+    --chart-4: 0.8 0.15 75;
+    --chart-5: 0.7 0.13 235;
+    --sidebar: 0.185 0.022 275;
+    --sidebar-foreground: 0.85 0.01 275;
+    --sidebar-primary: 0.65 0.19 277;
+    --sidebar-primary-foreground: 0.15 0.02 275;
+    --sidebar-accent: 0.27 0.05 277;
+    --sidebar-accent-foreground: 0.88 0.08 277;
+    --sidebar-border: 0.26 0.015 275;
+    --sidebar-ring: 0.65 0.19 277;
+    --shadow-card: 0 1px 2px oklch(0 0 0 / 30%);
+    --shadow-glow: 0 8px 24px -8px oklch(0.65 0.19 277 / 50%);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    font-family: var(--font-body);
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "ss01";
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: oklch(var(--border));
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@layer utilities {
+  .bg-brand {
+    background-image: var(--gradient-brand);
+  }
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+}
