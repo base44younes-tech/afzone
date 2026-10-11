@@ -35,5 +35,8 @@ dist-ssr
 .env
 .vite
 
+# Generated project download packages (publicly served, not part of the source)
+public/*.zip
+
 # Local link to a Base44 app, written by `base44 link`
 base44/.app.jsonc
