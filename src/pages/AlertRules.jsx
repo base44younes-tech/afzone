@@ -2,9 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faListCheck, faPlus, faEye, faPencil, faTrash, faSliders, faArrowLeft,
-  faFlood, faSkullCrossbones, faHouseCircleExclamation, faServer, faDatabase, faClock,
+  faWater, faSkullCrossbones, faHouseCircleExclamation, faServer, faDatabase, faClock,
   faPlug, faLock, faGlobe, faNetworkWired, faFileShield, faFileCircleExclamation, faBug,
-  faGaugeHigh, faHardDrive, faBell, faPaperPlane, faEnvelope, faTelegram, faWebhook, faBan,
+  faGaugeHigh, faHardDrive, faBell, faPaperPlane, faEnvelope, faComments, faTowerBroadcast, faBan,
   faClockRotateLeft, faSave, faWandMagicSparkles,
 } from "@fortawesome/free-solid-svg-icons";
 import { IconBadge, Panel, Pill, toFa } from "@/components/yguard/ui";
@@ -20,11 +20,11 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
 const tplIconMap = {
-  faFlood, faSkullCrossbones, faHouseCircleExclamation, faServer, faDatabase, faClock,
+  faWater, faSkullCrossbones, faHouseCircleExclamation, faServer, faDatabase, faClock,
   faPlug, faLock, faGlobe, faNetworkWired, faFileShield, faFileCircleExclamation, faBug,
   faGaugeHigh, faHardDrive,
 };
-const actionIconMap = { faBell, faPaperPlane, faEnvelope, faTelegram, faWebhook, faBan };
+const actionIconMap = { faBell, faPaperPlane, faEnvelope, faComments, faTowerBroadcast, faBan };
 
 export default function AlertRules() {
   const [loading, setLoading] = useState(true);

@@ -502,7 +502,7 @@ export const ALERT_RULES = [
 
 // ── Rule Templates ──────────────────────────────────────────
 export const RULE_TEMPLATES = [
-  { id: "tpl-1", name: "Request Flood", category: "Security", severity: "critical", icon: "faFlood" },
+  { id: "tpl-1", name: "Request Flood", category: "Security", severity: "critical", icon: "faWater" },
   { id: "tpl-2", name: "Brute Force", category: "Security", severity: "high", icon: "faSkullCrossbones" },
   { id: "tpl-3", name: "Homepage Down", category: "HTTP", severity: "critical", icon: "faHouseCircleExclamation" },
   { id: "tpl-4", name: "Critical Page 503", category: "HTTP", severity: "critical", icon: "faServer" },
@@ -539,8 +539,8 @@ export const RULE_BUILDER_ACTIONS = [
   { id: "dashboard", label: "Dashboard Alert", icon: "faBell" },
   { id: "sms", label: "SMS", icon: "faPaperPlane" },
   { id: "email", label: "Email", icon: "faEnvelope" },
-  { id: "telegram", label: "Telegram", icon: "faTelegram" },
-  { id: "webhook", label: "Webhook", icon: "faWebhook" },
+  { id: "telegram", label: "Telegram", icon: "faComments" },
+  { id: "webhook", label: "Webhook", icon: "faTowerBroadcast" },
   { id: "block", label: "Temporary Block", icon: "faBan" },
 ];
 
@@ -552,8 +552,8 @@ export const COOLDOWN_OPTIONS = [
 export const CHANNEL_CARDS = [
   { id: "sms", name: "SMS", icon: "faPaperPlane", status: "connected", statusLabel: "متصل", tone: "success", desc: "ملی پیامک" },
   { id: "email", name: "Email", icon: "faEnvelope", status: "disabled", statusLabel: "غیرفعال", tone: "warning", desc: "SMTP" },
-  { id: "telegram", name: "Telegram", icon: "faTelegram", status: "coming", statusLabel: "به‌زودی", tone: "info", desc: "Bot API" },
-  { id: "webhook", name: "Webhook", icon: "faWebhook", status: "disabled", statusLabel: "غیرفعال", tone: "warning", desc: "Custom HTTP" },
+  { id: "telegram", name: "Telegram", icon: "faComments", status: "coming", statusLabel: "به‌زودی", tone: "info", desc: "Bot API" },
+  { id: "webhook", name: "Webhook", icon: "faTowerBroadcast", status: "disabled", statusLabel: "غیرفعال", tone: "warning", desc: "Custom HTTP" },
 ];
 
 // ── SMS Receivers ───────────────────────────────────────────

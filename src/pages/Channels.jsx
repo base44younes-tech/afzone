@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPaperPlane, faEnvelope, faTelegram, faWebhook, faBell, faCircleCheck, faCircleXmark,
+  faPaperPlane, faEnvelope, faComments, faTowerBroadcast, faBell, faCircleCheck, faCircleXmark,
   faCircleInfo, faClock, faPlus, faTrash, faPencil, faEye, faEyeSlash, faPlug,
-  faShieldHalved, faChartLine, faServer, faBolt, faMobileScreen, faGlobe,
+  faShieldHalved, faChartLine, faServer, faBolt, faMobileScreen, faGlobe, faDatabase,
   faMoon, faCalendarDay, faWrench, faTableList, faCircleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 import { IconBadge, Panel, Pill, toFa } from "@/components/yguard/ui";
@@ -24,7 +24,7 @@ import {
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
-const channelIconMap = { faPaperPlane, faEnvelope, faTelegram, faWebhook };
+const channelIconMap = { faPaperPlane, faEnvelope, faComments, faTowerBroadcast };
 const groupIconMap = { faShieldHalved, faChartLine, faServer, faBolt };
 
 export default function Channels() {
