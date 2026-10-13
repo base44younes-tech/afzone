@@ -1256,7 +1256,14 @@ img, svg { max-width: 100%; }
 }
 
 @media (max-width: 420px) {
-  .related__grid { grid-template-columns: minmax(0, 1fr); }
+  .related__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s3); }
+  .product-card__body { padding: var(--s3); gap: 4px; }
+  .product-card__price { gap: var(--s2); }
+  .product-card__title { font-size: .875rem; line-height: 1.65; }
+  .product-card__current { font-size: .9375rem; }
+  .product-card__meta { font-size: .6875rem; }
+  .product-card__unit { font-size: .6875rem; }
+  .product-card__old { font-size: .75rem; }
 }
 
 /* ==========================================================================
@@ -1273,7 +1280,7 @@ img, svg { max-width: 100%; }
 .js-reveal {
   opacity: 0;
   transform: translateY(14px);
-  transition: opacity .6s var(--ease), transform .6s var(--ease);
+  transition: opacity var(--motion-slow) var(--ease-out), transform var(--motion-slow) var(--ease-out);
   will-change: opacity, transform;
 }
 .js-reveal.is-visible {
@@ -1330,11 +1337,7 @@ img, svg { max-width: 100%; }
   100% { opacity: 1; }
 }
 
-/* --- تعداد: فشردن دکمه --- */
-.stepper__btn.is-pressed {
-  transform: scale(.92);
-  transition: transform .1s var(--ease);
-}
+/* --- تعداد: فشردن دکمه (بازخورد لمسی یکپارچه در پایان فایل) --- */
 
 /* --- تعداد: انتقال عدد --- */
 .stepper__value.is-changing { animation: qty-bump .25s var(--ease); }
@@ -1373,7 +1376,6 @@ img, svg { max-width: 100%; }
   .swatches__label.is-unavailable,
   .chips__label.is-resetting,
   .swatches__label.is-resetting,
-  .stepper__btn.is-pressed,
   .stepper__value.is-changing,
   .tabs__panel.is-entering { animation: none !important; }
 }
@@ -1567,7 +1569,7 @@ img, svg { max-width: 100%; }
 }
 .sticky-buy__price .price__unit { font-size: .75rem; font-weight: 500; color: var(--ink-3); }
 .sticky-buy__cta { height: 46px; padding-inline: var(--s6); font-size: .9375rem; flex: none; }
-@media (max-width: 1099px) { .sticky-buy { display: none; } }
+/* استایل نوار خرید چسبنده روی موبایل در پایان فایل آمده است (پولیش گام ۳) */
 
 /* --- ۷) بازگشت به بالا (RTL-safe) --- */
 .to-top {
@@ -1605,4 +1607,201 @@ img, svg { max-width: 100%; }
   .to-top { transition: none !important; }
   .summary.is-visible .summary__eyebrow::before,
   .buy-form.is-visible .field:first-of-type .field__legend::after { animation: none !important; }
+}
+
+/* ==========================================================================
+   پولیش موبایل (گام ۳) — توکن‌های یکپارچه حرکت، بازخورد لمسی، ریپل،
+   گالری لمسی، نوار خرید چسبنده موبایل و پولیش آگاه به سرعت اسکرول.
+   فقط افزودنی است؛ ساختار، رنگ‌ها و هویت بصری تغییر نمی‌کند.
+   ========================================================================== */
+
+/* --- توکن‌های یکپارچه حرکت --- */
+:root {
+  --motion-fast: 160ms;
+  --motion-base: 320ms;
+  --motion-slow: 480ms;
+  --ease-out: cubic-bezier(.22, .61, .36, 1);
+  --ease-spring: cubic-bezier(.34, 1.28, .5, 1);
+  --tap-scale: .975;
+  --mobile-toolbar-height: 0px;
+}
+
+/* --- ۱) بازخورد لمسی: فشردن سبک و بازگشت نرم --- */
+.chips__label,
+.swatches__label,
+.stepper__btn,
+.thumb,
+.reset-btn,
+.wish-btn,
+.icon-btn,
+.tabs__tab,
+.product-card,
+.btn--ghost {
+  transition:
+    transform var(--motion-base) var(--ease-spring),
+    background var(--dur) var(--ease),
+    color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+
+.chips__label.is-tap,
+.swatches__label.is-tap,
+.stepper__btn.is-tap,
+.thumb.is-tap,
+.reset-btn.is-tap,
+.wish-btn.is-tap,
+.icon-btn.is-tap,
+.tabs__tab.is-tap,
+.product-card.is-tap,
+.btn--ghost.is-tap {
+  transform: scale(var(--tap-scale));
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+
+/* --- ۲) ریپل سبک و مشترک (فقط روی کنترل‌های انتخابی) --- */
+.chips__label,
+.swatches__label,
+.stepper__btn { position: relative; overflow: hidden; }
+
+.tap-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(31, 61, 46, .1);
+  transform: scale(0);
+  pointer-events: none;
+  animation: tap-ripple 520ms var(--ease-out) forwards;
+}
+@keyframes tap-ripple {
+  from { transform: scale(0); opacity: .9; }
+  to { transform: scale(1); opacity: 0; }
+}
+
+/* --- ۳) عدد تعداد: لغزش کوتاه هم‌جهت با تغییر --- */
+.stepper__value.is-changing.is-up { animation: qty-up 220ms var(--ease-out); }
+.stepper__value.is-changing.is-down { animation: qty-down 220ms var(--ease-out); }
+@keyframes qty-up {
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes qty-down {
+  from { opacity: 0; transform: translateY(-7px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* --- ۴) گالری: سوایپ لمسی، شمارنده، نشستن نرم تصویر --- */
+.gallery__frame { touch-action: pan-y pinch-zoom; }
+
+.gallery__frame .art {
+  transform: scale(var(--art-scale, 1));
+  transition: opacity var(--motion-base) var(--ease-out),
+              transform var(--motion-slow) var(--ease-out);
+}
+.gallery__frame .art.is-fading { opacity: 0; }
+.gallery__frame .art.is-settling { --art-scale: 1.02; }
+
+.gallery__count {
+  position: absolute;
+  bottom: var(--s5);
+  inset-inline-start: var(--s5);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px var(--s3);
+  border-radius: var(--r-pill);
+  background: rgba(16, 42, 28, .88);
+  color: #fdfaf4;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  pointer-events: none;
+}
+@media (max-width: 720px) {
+  .gallery__count { bottom: var(--s4); inset-inline-start: var(--s4); font-size: .6875rem; }
+}
+
+/* --- ۵) تب‌ها روی موبایل: اسکرول افقی نرم، بدون اسکرول‌بار --- */
+@media (max-width: 720px) {
+  .tabs__nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tabs__nav::-webkit-scrollbar { display: none; }
+  .tabs__tab { flex: 0 0 auto; }
+}
+
+/* --- ۶) نوار خرید چسبنده موبایل (بالای تولبار پوسته + safe-area) --- */
+@media (max-width: 1099px) {
+  .sticky-buy {
+    bottom: calc(var(--mobile-toolbar-height, 0px) + env(safe-area-inset-bottom, 0px) + 8px);
+    width: min(520px, calc(100% - 24px));
+    z-index: 39;
+  }
+  .sticky-buy__inner { gap: var(--s3); padding: 8px; }
+  .sticky-buy__price { font-size: .9375rem; }
+  .sticky-buy__cta { flex: 1 1 auto; height: 48px; padding-inline: var(--s5); font-size: .9375rem; }
+  .to-top {
+    transition: opacity .3s var(--ease-out), transform .3s var(--ease-out),
+                bottom var(--motion-base) var(--ease-out), background var(--dur) var(--ease);
+  }
+  .sticky-buy.is-visible ~ .to-top {
+    bottom: calc(var(--mobile-toolbar-height, 0px) + env(safe-area-inset-bottom, 0px) + 76px);
+  }
+}
+
+/* --- ۷) کاهش تزئینات هنگام اسکرول سریع --- */
+.is-fast-scroll .js-spotlight::after { opacity: 0; transition: none; }
+.is-fast-scroll .stock__dot::after { animation-play-state: paused; }
+.is-fast-scroll .product-card:not(.is-tap):hover,
+.is-fast-scroll .thumb:not(.thumb--active):not(.is-tap):hover,
+.is-fast-scroll .btn--primary:not(.js-cta):hover { transform: none; }
+
+/* --- ۸) لمس/بدون‌هاور: افکت‌های دسکتاپ خاموش می‌شوند --- */
+@media (hover: none) {
+  .gallery__frame:hover .art { transform: scale(var(--art-scale, 1)); }
+  .thumb:not(.thumb--active):not(.is-tap):hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--line);
+  }
+  .thumb:hover .art { transform: scale(1); }
+  .product-card:not(.is-tap):hover {
+    transform: none;
+    box-shadow: var(--shadow-xs);
+    border-color: var(--line);
+  }
+  .product-card:hover .product-card__media .art { transform: none; }
+  .btn--primary:not(.js-cta):hover {
+    transform: none;
+    background: var(--green-800);
+    box-shadow: var(--shadow-sm);
+  }
+  .stepper__btn:hover { background: var(--surface-warm); border-color: var(--line); color: var(--ink-2); }
+  .icon-btn:hover { background: none; border-color: transparent; color: var(--ink-2); }
+  .wish-btn:hover { transform: none; color: var(--ink-2); border-color: var(--line); }
+  .review:hover { border-color: var(--line); box-shadow: none; }
+  .chips__label:hover { border-color: var(--line-mid); color: var(--ink-2); }
+  .swatches__label:hover { border-color: var(--line-mid); }
+  .btn--ghost:hover { border-color: var(--line-mid); background: var(--surface); }
+}
+
+/* --- ۹) حرکت کاهش‌یافته: خاموشی کامل تزئینات گام ۳ --- */
+@media (prefers-reduced-motion: reduce) {
+  .tap-ripple { display: none !important; }
+  .chips__label.is-tap,
+  .swatches__label.is-tap,
+  .stepper__btn.is-tap,
+  .thumb.is-tap,
+  .reset-btn.is-tap,
+  .wish-btn.is-tap,
+  .icon-btn.is-tap,
+  .tabs__tab.is-tap,
+  .product-card.is-tap,
+  .btn--ghost.is-tap { transform: none !important; }
+  .stepper__value.is-changing.is-up,
+  .stepper__value.is-changing.is-down { animation: none !important; }
+  .gallery__frame .art { transition: none !important; }
 }
