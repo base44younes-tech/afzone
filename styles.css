@@ -1377,3 +1377,232 @@ img, svg { max-width: 100%; }
   .stepper__value.is-changing,
   .tabs__panel.is-entering { animation: none !important; }
 }
+
+/* ==========================================================================
+   پولیش پیشرفته (گام ۲) — اسپات‌لایت، مگنتیک، حالت‌های CTA، چسبنده، بازگشت به بالا
+   ========================================================================== */
+
+/* --- ۱) اسپات‌لایت اشاره‌گر (فقط دسکتاپ) --- */
+.js-spotlight { position: relative; }
+.js-spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%),
+                              rgba(185, 92, 42, .09), rgba(185, 92, 42, 0) 70%);
+  opacity: 0;
+  transition: opacity .45s var(--ease);
+}
+.js-spotlight.is-spot::after { opacity: 1; }
+
+/* --- ۲) دکمه CTA: مگنتیک + ریپل + حالت‌ها --- */
+.btn--primary.js-cta {
+  position: relative;
+  overflow: hidden;
+  transform: translate(var(--cta-tx, 0px), var(--cta-ty, 0px)) scale(var(--cta-s, 1));
+  transition: transform .2s var(--ease),
+              background var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease),
+              color var(--dur) var(--ease);
+}
+.js-cta .btn__icon,
+.js-cta .btn__label { transition: opacity .2s var(--ease); }
+
+.js-cta.is-loading .btn__icon,
+.js-cta.is-loading .btn__label,
+.js-cta.is-success .btn__icon,
+.js-cta.is-success .btn__label { opacity: 0; }
+
+.btn__state {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s var(--ease);
+}
+.btn__state--load,
+.btn__state--ok {
+  grid-area: 1 / 1;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transition: opacity .22s var(--ease);
+}
+.js-cta.is-loading .btn__state,
+.js-cta.is-success .btn__state { opacity: 1; }
+.js-cta.is-loading .btn__state--load { opacity: 1; }
+.js-cta.is-success .btn__state--ok { opacity: 1; }
+.js-cta.is-success { background: var(--green-700); }
+
+.cta-spinner {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgba(253, 250, 244, .35);
+  border-top-color: #fdfaf4;
+  animation: cta-spin .7s linear infinite;
+}
+@keyframes cta-spin { to { transform: rotate(360deg); } }
+
+.cta-check {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: #fdfaf4;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.cta-check path { stroke-dasharray: 26; stroke-dashoffset: 26; }
+.js-cta.is-success .cta-check path { animation: cta-check .4s var(--ease) forwards; }
+@keyframes cta-check { to { stroke-dashoffset: 0; } }
+
+.cta-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .3);
+  transform: scale(0);
+  pointer-events: none;
+  animation: cta-ripple .6s var(--ease) forwards;
+}
+@keyframes cta-ripple {
+  from { transform: scale(0); opacity: .55; }
+  to { transform: scale(1); opacity: 0; }
+}
+
+.js-cta[disabled],
+.js-cta[aria-disabled="true"] {
+  opacity: .55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* --- ۳) بازخورد پیشرفته تصاویر کوچک --- */
+.thumb { position: relative; }
+.thumb::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background: var(--green-800);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, .9);
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .28s var(--ease), opacity .28s var(--ease);
+}
+.thumb--active::after { transform: scale(1); opacity: 1; }
+.thumb--active { transform: translateY(-1px) scale(1.03); }
+.thumb--active:hover { transform: translateY(-2px) scale(1.03); }
+
+/* --- ۴) پالس وضعیت موجودی (کم‌بسامد) --- */
+.stock__dot { position: relative; }
+.stock__dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--green-700);
+  animation: stock-pulse 3.6s var(--ease) infinite;
+}
+@keyframes stock-pulse {
+  0% { transform: scale(1); opacity: .38; }
+  50% { transform: scale(2.8); opacity: 0; }
+  50.01%, 100% { transform: scale(1); opacity: 0; }
+}
+
+/* --- ۵) ورود خطوط/نشانگرهای بخش (یک‌بار) --- */
+.summary.is-visible .summary__eyebrow::before {
+  animation: line-grow .7s var(--ease) both;
+  transform-origin: right center;
+}
+.buy-form.is-visible .field:first-of-type .field__legend::after {
+  animation: line-grow .7s var(--ease) .12s both;
+  transform-origin: right center;
+}
+@keyframes line-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* --- ۶) نوار خرید چسبنده (فقط دسکتاپ) --- */
+.sticky-buy {
+  position: fixed;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
+  z-index: 40;
+  width: min(560px, calc(100% - 40px));
+  transform: translate(-50%, 140%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .45s var(--ease), opacity .35s var(--ease);
+}
+.sticky-buy.is-visible {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.sticky-buy__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s5);
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: rgba(251, 249, 245, .98);
+  box-shadow: var(--shadow-lg);
+}
+.sticky-buy__price {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--green-900);
+  white-space: nowrap;
+}
+.sticky-buy__price .price__unit { font-size: .75rem; font-weight: 500; color: var(--ink-3); }
+.sticky-buy__cta { height: 46px; padding-inline: var(--s6); font-size: .9375rem; flex: none; }
+@media (max-width: 1099px) { .sticky-buy { display: none; } }
+
+/* --- ۷) بازگشت به بالا (RTL-safe) --- */
+.to-top {
+  position: fixed;
+  inset-inline-end: 20px;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--green-800);
+  box-shadow: var(--shadow-sm);
+  opacity: 0;
+  transform: scale(.8);
+  pointer-events: none;
+  transition: opacity .3s var(--ease), transform .3s var(--ease), background var(--dur) var(--ease);
+}
+.to-top.is-visible { opacity: 1; transform: scale(1); pointer-events: auto; }
+.to-top svg { width: 20px; height: 20px; }
+.to-top:hover { background: var(--green-50); }
+
+/* --- احترام به حرکت کاهش‌یافته (گام ۲) --- */
+@media (prefers-reduced-motion: reduce) {
+  .js-spotlight::after { transition: none !important; }
+  .btn--primary.js-cta { transition: none !important; transform: none !important; }
+  .cta-spinner { animation: none !important; }
+  .cta-ripple { display: none !important; }
+  .stock__dot::after { animation: none !important; }
+  .thumb::after { transition: none !important; }
+  .sticky-buy,
+  .to-top { transition: none !important; }
+  .summary.is-visible .summary__eyebrow::before,
+  .buy-form.is-visible .field:first-of-type .field__legend::after { animation: none !important; }
+}
